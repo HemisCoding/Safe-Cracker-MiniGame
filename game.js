@@ -84,16 +84,21 @@ class SafeCrackerGame {
     }
   }
 
-  updateGrid(boxNumber) {
+  updateGrid(boxNumber, multiplier) {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (this.grid[i][j] === boxNumber) {
-          this.grid[i][j] = `x${this.selectedMultipliers[boxNumber - 1]}`;
+          if (multiplier !== undefined) {
+            this.grid[i][j] = `x${multiplier}`;
+          } else {
+            this.grid[i][j] = `xundefined`;
+          }
         }
       }
     }
     this.drawGrid();
   }
+  
 
   checkWinCondition(multiplier) {
     if (multiplier !== undefined && this.winningMultiplier === null) {
