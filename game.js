@@ -72,7 +72,7 @@ class SafeCrackerGame {
     console.clear();
     console.log(`Spin ${5 - this.spinsLeft} opens box ${boxNumber}, a x${multiplier} multiplier is revealed`);
     this.updateGrid(boxNumber);
-    this.checkWinCondition(this.selectedMultipliers[boxNumber - 1]);
+    this.checkWinCondition(multiplier);
 
     if (this.spinsLeft > 0 && this.winningMultiplier === null) {
       console.log(`\nSpins left: ${this.spinsLeft}`);
@@ -88,7 +88,7 @@ class SafeCrackerGame {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (this.grid[i][j] === boxNumber) {
-          this.grid[i][j] = `x${this.selectedMultipliers[this.grid[i][j] - 1]}`;
+          this.grid[i][j] = `x${this.selectedMultipliers[boxNumber - 1]}`;
         }
       }
     }
@@ -96,11 +96,14 @@ class SafeCrackerGame {
   }
 
   checkWinCondition(multiplier) {
-    if (this.winningMultiplier === null) {
+    if (multiplier !== undefined && this.winningMultiplier === null) {
       this.winningMultiplier = multiplier;
-      this.totalWinAmount = this.betAmount * multiplier;
+      this.totalWinAmount = (this.betAmount * multiplier) - this.betAmount;
+    } else if (multiplier === undefined) {
+      this.totalWinAmount = 0;
     }
   }
+  
 }
 
 // Start the game
